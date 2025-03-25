@@ -56,6 +56,7 @@ public class NumberLineView extends View {
         drawNumberLine(canvas);
         drawMascot(canvas);
     }
+    
 
     private void drawNumberLine(Canvas canvas) {
         float startX = getWidth() * 0.01f;

@@ -1,8 +1,10 @@
 package com.zendalona.mathmantra.ui;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
 
@@ -10,6 +12,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import com.zendalona.mathmantra.MainActivity;
 import com.zendalona.mathmantra.databinding.FragmentChooseLessonBinding;
 import com.zendalona.mathmantra.utils.FragmentNavigation;
 
@@ -139,6 +142,22 @@ public class ChooseLessonFragment extends Fragment {
 
 
         return binding.getRoot();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().getOnBackPressedDispatcher().addCallback(
+                getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        // Navigate to MainActivity
+                        Intent intent = new Intent(requireActivity(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        requireActivity().finish();
+                    }
+                });
     }
 
     private void sendDataToNarratorFragment(ArrayList<String> contents){

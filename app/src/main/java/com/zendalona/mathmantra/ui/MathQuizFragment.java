@@ -1,8 +1,10 @@
 package com.zendalona.mathmantra.ui;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -12,6 +14,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
+import com.zendalona.mathmantra.MainActivity;
 import com.zendalona.mathmantra.R;
 import com.zendalona.mathmantra.databinding.DialogResultBinding;
 import com.zendalona.mathmantra.databinding.FragmentMathQuizBinding;
@@ -39,6 +42,22 @@ public class MathQuizFragment extends Fragment {
         random = new RandomValueGenerator();
         generateNewQuestion();
         return binding.getRoot();
+    }
+    @Override
+    public void onResume() {
+        super.onResume();
+        requireActivity().getOnBackPressedDispatcher().addCallback(
+                getViewLifecycleOwner(),
+                new OnBackPressedCallback(true) {
+                    @Override
+                    public void handleOnBackPressed() {
+                        // Navigate to MainActivity
+                        Intent intent = new Intent(requireActivity(), MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP);
+                        startActivity(intent);
+                        requireActivity().finish();
+                    }
+                });
     }
 
     private void generateNewQuestion() {
